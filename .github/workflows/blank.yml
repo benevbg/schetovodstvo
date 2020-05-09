@@ -1,0 +1,85 @@
+from tkinter import *
+from tkinter.filedialog import askopenfilename
+import tkinter as tk
+from tkinter import ttk
+import mysql.connector
+
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="root",
+  passwd="",
+  database= "schetovodstvo"
+)
+mycursor = mydb.cursor()
+
+a=1
+# a=cb.get()
+
+def zapis (cb = ttk.Combobox) :
+#       self=pribt("HW")
+#       a=self.cb
+       self.cb=cb.get()
+       a=cb.get(self)
+
+       sql = "INSERT INTO contragents (nomer,name,bulstat,dn,grad,address,otgso,poluchatel) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+       val = (a , "Булфинанс" , "123456789" , "BG123456789" , "София" , "Витошка 1" , "Иван" , "Петър")
+
+# val = ("1" ,"Булфинанс","123456789","BG123456789","София","Витошка 1","Иван","Петър")
+
+       mycursor.execute (sql , val)
+       print (mycursor.rowcount , "record inserted.")
+
+       mydb.commit ( )
+       mycursor.close()
+       print ("Контрагенти!")
+
+def contragents (cb = ttk.Combobox):
+    #    app = tk.Tk()
+    #    app.geometry('200x100')
+    print ("Контрагенти!")
+    root1 = Tk ()
+    root1.config (menu = menu)
+    root1.geometry ('800x600')
+    filemenu1 = Menu (menu)
+
+    w = Label (root1, text = "номер на контрагент").place (x = 10, y = 15)
+    cb = ttk.Combobox (root1, values = [ 1, 2, 3, 4, 5 ], width = 8).place (x = 10, y = 35)
+    w1 = Label (root1, text = "име на контрагент").place (x = 200, y = 15)
+    cb1 = ttk.Combobox (root1, values = [ ], width = 30).place (x = 150, y = 35)
+    w2 = Label (root1, text = "БУЛСТАТ").place (x = 400, y = 15)
+    cb2 = ttk.Combobox (root1, values = [ ]).place (x = 400, y = 35)
+    w3 = Label (root1, text = "данъчен номер").place (x = 600, y = 15)
+    cb3 = ttk.Combobox (root1, values = [ ]).place (x = 600, y = 35)
+    w4 = Label (root1, text = "град").place (x = 10, y = 115)
+    cb4 = ttk.Combobox (root1, values = [ ], width = 8).place (x = 10, y = 135)
+    w5 = Label (root1, text = "адрес").place (x = 200, y = 115)
+    cb5 = ttk.Combobox (root1, values = [ ], width = 30).place (x = 150, y = 135)
+    w6 = Label (root1, text = "ОСО").place (x = 400, y = 115)
+    cb6 = ttk.Combobox (root1, values = [ ]).place (x = 400, y = 135)
+    w7 = Label (root1, text = "Получател").place (x = 600, y = 115)
+    cb7 = ttk.Combobox (root1, values = [ ]).place (x = 600, y = 135)
+    button = ttk.Button (root1, text = "запис", command = zapis).place (x = 600, y = 200)
+
+def OpenFile ( ):
+    name = askopenfilename ()
+    print (name)
+
+def About ( ):
+    print ("This is a simple example of a menu")
+
+root = Tk ( )
+menu = Menu (root)
+root.config (menu = menu)
+root.geometry ('400x300')
+filemenu = Menu (menu)
+menu.add_cascade (label = "Номенклатури" , menu = filemenu)
+filemenu.add_command (label = "Контрагенти" , command = contragents)
+filemenu.add_command (label = "Open..." , command = OpenFile)
+filemenu.add_separator ( )
+filemenu.add_command (label = "Exit" , command = root.quit)
+
+helpmenu = Menu (menu)
+menu.add_cascade (label = "Help" , menu = helpmenu)
+helpmenu.add_command (label = "About..." , command = About)
+
+mainloop()
