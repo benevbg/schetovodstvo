@@ -43,7 +43,8 @@ def contragents (cb = ttk.Combobox):
     filemenu1 = Menu (menu)
 
     w = Label (root1, text = "номер на контрагент").place (x = 10, y = 15)
-    cb = ttk.Combobox (root1, values = [ 1, 2, 3, 4, 5 ], width = 8).place (x = 10, y = 35)
+    cb = ttk.Combobox (root1, values = [ 1, 2, 3, 4, 5 ], width = 8)
+    cb.place (x = 10, y = 35)
     w1 = Label (root1, text = "име на контрагент").place (x = 200, y = 15)
     cb1 = ttk.Combobox (root1, values = [ ], width = 30).place (x = 150, y = 35)
     w2 = Label (root1, text = "БУЛСТАТ").place (x = 400, y = 15)
